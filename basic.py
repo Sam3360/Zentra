@@ -11,6 +11,10 @@ class Error:
         result=f'{self.error_name}: {self.details}'
         return result
 
+class IllegalCharError(Error):
+    def __init__(self, details):
+        super().__init__('Illegal Character', details)
+
 #Tokens
 
 TT_INT = 'INT'
@@ -75,8 +79,11 @@ class Lexer:
                 tokens.append(Token(TT_RPAREN))
                 self.advance()
             else:
-                raise Exception(f"Illegal character '{self.current_char}'")
-        return tokens
+                pos_start = self.pos.copy()
+                char = self.current_char
+                self.advance()
+                return [], IllegalCharError(pos_start, self.pos, "'" + char + "'")
+        return tokens, None
 
     def generate_number(self):
         num_str=''
