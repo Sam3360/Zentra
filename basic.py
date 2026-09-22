@@ -100,3 +100,11 @@ class Lexer:
             return Token(TT_INT, int(num_str))
         else:
             return Token(TT_FLOAT, float(num_str))
+
+
+
+def run(fn, text):
+    lexer = Lexer(fn, text)
+    tokens, error = lexer.make_tokens()
+ 
+    return tokens, error
