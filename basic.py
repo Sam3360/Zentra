@@ -42,7 +42,9 @@ class Lexer:
         while self.current_char!=None:
             if self.current_char in ' \t':
                 self.advance()
-            elif self.current_char in '0123456789':
+            elif self.current_char=='\n':
+                self.advance()
+            elif self.current_char in DIGITS:
                 tokens.append(self.generate_number())
             elif self.current_char=='+':
                 tokens.append(Token(TT_PLUS))
